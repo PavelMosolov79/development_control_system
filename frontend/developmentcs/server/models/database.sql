@@ -7,3 +7,9 @@ create TABLE person(
     email VARCHAR(255),
     phone VARCHAR(255)
 );
+
+create TABLE token(
+    id SERIAL PRIMARY KEY,
+    userId INTEGER, FOREIGN KEY (userId) REFERENCES person (id),
+    refreshToken VARCHAR(255)
+);

@@ -2,6 +2,7 @@
   "name": "developmentcs",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:8080",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -12,10 +13,13 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start-all": "concurrently \"npm run start-frontend\" \"npm run start-backend\" --kill-others",
+    "start-frontend": "react-scripts start",
+    "start-backend": "cd server && nodemon server.js",
+    "start-frontend-base": "react-scripts start",
+    "build-frontend-base": "react-scripts build",
+    "test-frontend-base": "react-scripts test",
+    "eject-frontend-base": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -34,5 +38,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.1.0"
   }
 }
