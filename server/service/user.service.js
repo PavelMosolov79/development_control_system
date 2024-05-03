@@ -19,7 +19,7 @@ class UserService {
             const activationLink = uuid.v4();
             const newPerson = await db.query('INSERT INTO person (password, email, isActivated, activationLink) values ($1, $2, $3, $4) RETURNING *', [hashPassword, email, false, activationLink])
 
-            await mailService.sendActivationMail(email, `${process.env.API_URL}/api/userWork/activate/${activationLink}`);
+            await mailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`);
 
             const userDto = new UserDto(newPerson.rows[0]);
             const tokens = tokenService.generateTokens({...userDto});
@@ -84,11 +84,13 @@ class UserService {
             throw ApiError.UnauthorizedError();
         }
 
-        const user = await db.query(`SELECT * FROM person WHERE id = $1`, [tokenFromDb.id]);
+        const user = await db.query(`SELECT * FROM person WHERE id = $1`, [userData.id]);
         const userDto = new UserDto(user.rows[0]);
         const tokens = tokenService.generateTokens({...userDto});
 
         await tokenService.saveToken(userDto.id, tokens.refreshToken);
+
+        return {...tokens, userDto}
     }
 
     async getAllUsers() {
