@@ -1,0 +1,44 @@
+.button__block-authorization {
+    border: none; /* Убирает границу */
+    appearance: none; /* Убирает стили браузера для элементов ввода */
+    outline: none; /* Убирает контур фокуса */
+    margin: 0; /* Убирает внешние отступы */
+    padding: 0; /* Убирает внутренние отступы */
+    background: none; /* Убирает фон */
+    font: inherit; /* Наследует шрифт */
+    line-height: normal; /* Устанавливает нормальную высоту строки */
+
+    width: calc(var(--index) * 12);
+    height: calc(var(--index) * 1.5);
+    margin: 10px;
+    color: var(--border-color-bottom);
+    font-size: 18px;
+    font-weight: bolder;
+    background: var(--background-color-white);
+    border-radius: 15px;
+    border: 2px solid var(--border-color-bottom);
+    transition: transform 0.3s;
+}
+
+.button__block-authorization:hover {
+    border: none; /* Убирает границу */
+    appearance: none; /* Убирает стили браузера для элементов ввода */
+    outline: none; /* Убирает контур фокуса */
+    margin: 0; /* Убирает внешние отступы */
+    padding: 0; /* Убирает внутренние отступы */
+    background: none; /* Убирает фон */
+    font: inherit; /* Наследует шрифт */
+    line-height: normal; /* Устанавливает нормальную высоту строки */
+
+    cursor: pointer;
+    width: calc(var(--index) * 12);
+    height: calc(var(--index) * 1.5);
+    margin: 10px;
+    color: var(--border-color-bottom);
+    font-size: 18px;
+    font-weight: bolder;
+    background: var(--background-color-white);
+    border-radius: 15px;
+    border: 2px solid var(--border-color-bottom);
+    transform: scale(1.02);
+}

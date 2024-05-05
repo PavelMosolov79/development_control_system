@@ -1,7 +1,8 @@
 // rsc
 import React, {FC, useContext, useState} from 'react';
-import {Context} from "../index";
+import {Context} from "../../index";
 import {observer} from "mobx-react-lite";
+import "../../globalstyles/background.pc.css";
 
 const LoginForm: FC = () => {
     const [email, setEmail] = useState<string>();
@@ -10,6 +11,7 @@ const LoginForm: FC = () => {
 
     return (
         <div>
+            <div className="slider-thumb"></div>
             <input
                 onChange={e => setEmail(e.target.value)}
                 value={email}

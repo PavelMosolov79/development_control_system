@@ -1,0 +1,10 @@
+:root {
+    --background-color-one: #190B60;
+    --background-color-two: #7C03A7;
+    --background-color-form: rgba(255, 255, 255, 0.5);
+    --background-color-white: rgba(255, 255, 255, 1);
+
+    --text-color-form-black: rgba(0, 0, 0, 1);
+
+    --border-color-bottom: #6041A6
+}

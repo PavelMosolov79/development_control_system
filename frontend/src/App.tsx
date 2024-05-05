@@ -1,41 +1,18 @@
-import React, {FC, useContext, useEffect} from 'react';
-import LoginForm from "./component/LoginForm";
-import {Context} from "./index";
+import React from 'react';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import {observer} from "mobx-react-lite";
-import {useLocation} from "react-router-dom";
+import Authorization from "./pages/Authorization";
 
-const App: FC = () => {
-  const {store} = useContext(Context)
-  const location = useLocation();
+// import Home from './Home';
+// import About from './About';
 
-  useEffect(() => {
-    if (localStorage.getItem('token')) {
-      store.chekAuth();
-    }
-  }, [])
-
-    if (store.isLoading){
-        return <div>Загрузка...</div>
-    }
-
-  if (!store.isAuth) {
+const App = () => {
     return (
-      <div>
-        <h1>Авторизуйтесь!</h1>
-        <LoginForm/>
-      </div>
-    )
-  }
-
-  return (
-    <div>
-      <h1>Вы авторзованы</h1>
-      {/*<h1>{store.isAuth? `Пользователь авторизован || ${store.user.email}` : `Авторизуйтесь!`}</h1>*/}
-      <button onClick={() => store.logout()}>
-        Выйти
-      </button>
-    </div>
-  );
+        <BrowserRouter>
+            <Routes>
+                <Route path="" element={<Authorization />} />
+            </Routes>
+        </BrowserRouter>
+    );
 }
-
 export default observer(App);

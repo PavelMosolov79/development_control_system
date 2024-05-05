@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter as Router } from 'react-router-dom';
 import App from './App';
 import Store from "./store/store";
 import {createContext} from "react";
+import "./globalstyles/colors.css"
+import '@fontsource-variable/montserrat';
 
 interface State {
     store: Store;
@@ -18,14 +19,13 @@ export const Context = createContext<State>({
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
 root.render(
-    <Router>
-        <React.StrictMode>
-            <Context.Provider value={{store}}>
-                <App />
-            </Context.Provider>
-        </React.StrictMode>
-    </Router>
+    <React.StrictMode>
+        <Context.Provider value={{store}}>
+            <App />
+        </Context.Provider>
+    </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

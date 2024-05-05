@@ -1,0 +1,16 @@
+.input__block-authorization {
+    border: none; /* Убирает границу */
+    appearance: none; /* Убирает стили браузера для элементов ввода */
+    outline: none; /* Убирает контур фокуса */
+    margin: 0; /* Убирает внешние отступы */
+    padding: 0; /* Убирает внутренние отступы */
+    background: none !important; /* Убирает фон */
+    font: inherit; /* Наследует шрифт */
+    line-height: normal; /* Устанавливает нормальную высоту строки */
+
+    width: calc(var(--index) * 12);
+    height: calc(var(--index) * 1.5);
+    margin: 10px;
+    color: var(--text-color-form-black);
+    border-bottom: 2px solid var(--border-color-bottom);
+}
