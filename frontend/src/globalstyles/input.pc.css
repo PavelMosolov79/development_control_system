@@ -12,5 +12,9 @@
     height: calc(var(--index) * 1.5);
     margin: 10px;
     color: var(--text-color-form-black);
-    border-bottom: 2px solid var(--border-color-bottom);
+    /*border-bottom: 2px solid var(--border-color-bottom);*/
+}
+
+.input__block-authorization::-webkit-input-placeholder {
+    color: var(--placeholder-color-form-grey);
 }

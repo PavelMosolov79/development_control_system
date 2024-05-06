@@ -1,3 +1,7 @@
+BEGIN;
+
+DROP TABLE IF EXISTS users, posts;
+
 create TABLE person(
     id SERIAL PRIMARY KEY,
     name VARCHAR(255),
@@ -15,3 +19,5 @@ create TABLE token(
     userId INTEGER, FOREIGN KEY (userId) REFERENCES person (id),
     refreshToken VARCHAR(255)
 );
+
+COMMIT;

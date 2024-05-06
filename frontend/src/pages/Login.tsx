@@ -5,7 +5,7 @@ import {observer} from "mobx-react-lite";
 import {useLocation} from "react-router-dom";
 import RegistrationForm from "../component/registration.form/RegistrationForm";
 
-const Authorization: FC = (index) => {
+const Login: FC = (index) => {
     const {store} = useContext(Context)
     const location = useLocation();
 
@@ -24,8 +24,7 @@ const Authorization: FC = (index) => {
     } else if(!store.isAuth) {
         return (
             <div>
-                <RegistrationForm/>
-                {/**/}
+                <LoginForm/>
             </div>
         )
     } else {
@@ -41,4 +40,4 @@ const Authorization: FC = (index) => {
     }
 }
 
-export default observer(Authorization);
+export default observer(Login);

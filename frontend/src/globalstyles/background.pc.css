@@ -6,7 +6,15 @@ body {
     width: auto;
     height: 100%;
     margin: 0px !important;
-    background: linear-gradient(to top right, var(--background-color-one) 20%, var(--background-color-two) 80%);
+    background: no-repeat url("../../public/ellipse.svg"),
+                no-repeat bottom/30% url("../../public/background_one.svg"),
+                no-repeat top right url("../../public/background_two.svg"),
+                no-repeat top left url("../../public/background_three.svg"),
+                no-repeat bottom right url("../../public/background_four.svg"),
+                no-repeat bottom left url("../../public/background_five.svg"),
+                no-repeat top left url("../../public/background_six.svg"),
+                linear-gradient(to top right, var(--background-color-two) 40%, var(--background-color-one));
+    /*background: ;*/
     font-family: 'Montserrat Variable', sans-serif;
 }
 

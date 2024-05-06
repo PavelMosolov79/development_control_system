@@ -1,0 +1,43 @@
+.h1_24 {
+    font-size: 24px;
+    font-weight: initial;
+    color: var(--text-color-form-white);
+}
+
+.h2_20 {
+    font-size: 20px;
+    color: var(--text-color-form-black);
+}
+
+.p_18 {
+    font-size: 18px;
+    color: var(--text-color-form-white);
+}
+
+.a_18 {
+    outline: none;
+    text-decoration: none;
+    padding: 2px 1px 0;
+    border-bottom: 2px solid var(--text-color-form-white);
+}
+
+.a_18:link {
+    color: var(--text-color-form-white);
+}
+
+.a_18:visited {
+    color: var(--text-color-form-visited-pink);
+    border-bottom: 2px solid var(--text-color-form-visited-pink);
+}
+
+.a_18:focus {
+    border-bottom: 1px solid;
+}
+
+.a_18:hover {
+    border-bottom: 1px solid;
+}
+
+.a_18:active {
+    color: #CD6234;
+}

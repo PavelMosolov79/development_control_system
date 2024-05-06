@@ -1,0 +1,76 @@
+.registration__page {
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form__position {
+    padding: 10px;
+    display: flex;
+    /*justify-content: center;*/
+    /*align-content: center;*/
+}
+
+.form__width {
+    width: calc(var(--index) * 13);
+}
+
+.form__size {
+    width: calc(var(--index) * 15);
+    height: calc(var(--index) * 18);
+}
+
+.form__flex {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.form__flex-justify {
+    display: flex;
+    justify-content: center;
+}
+
+.text__block-size {
+    width: calc(var(--index) * 17);
+    text-align: center;
+}
+
+.text__block-size__h2 {
+    margin-top: 20px;
+    margin-bottom: 50px;
+    width: calc(var(--index) * 13);
+    text-align: center;
+}
+
+.block__flex {
+    display: flex;
+    align-items: center;
+}
+
+.block__border {
+    border-bottom: 2px solid var(--border-color-bottom);
+}
+
+.pointer {
+    width: 20px;
+    height: 20px;
+    border-radius: 25px;
+    background: var(--global-white-full);
+}
+
+.pointer__color {
+    width: 20px;
+    height: 20px;
+    border-radius: 25px;
+    background: var(--background-color-one);
+}
+
+.form__margin-top {
+    margin-top: 25px;
+}
+
+
