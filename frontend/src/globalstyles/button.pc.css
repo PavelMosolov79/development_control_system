@@ -37,8 +37,8 @@
     color: var(--border-color-bottom);
     font-size: 18px;
     font-weight: bolder;
-    background: var(--background-color-white);
+    background: var(--background-color-grey);
     border-radius: 15px;
     border: 2px solid var(--border-color-bottom);
-    transform: scale(1.02);
+    /*transform: scale(1.02);*/
 }

@@ -30,7 +30,7 @@ const LoginForm = () => {
                             <div className="form__margin-top form__flex-justify form__width">
                                 <div>
                                     <div className="block__flex">
-                                        <h2 className="h2_20 text__block-size__h2">Регистрация</h2>
+                                        <h2 className="h2_20 text__block-size__h2">Вход</h2>
                                     </div>
                                     <div className="block__border block__flex">
                                         {email ? <div id="Email" className="pointer__color"></div> :

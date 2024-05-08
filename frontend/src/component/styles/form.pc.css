@@ -46,9 +46,20 @@
     text-align: center;
 }
 
+text__block-authorization-size__h2 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    width: calc(var(--index) * 13);
+    text-align: center;
+}
+
 .block__flex {
     display: flex;
     align-items: center;
+}
+
+.form__justify {
+    justify-content: center;
 }
 
 .block__border {

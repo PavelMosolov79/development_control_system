@@ -26,64 +26,67 @@ const RegistrationForm = () => {
                         продолжить! </p>
                     <div className="form__flex">
                         <div className="bacground__form form__position form__size form__flex">
-                            <div className="form__flex-justify form__width">
-                               <div>
-                                   <div className="block__border block__flex">
-                                       {email ? <div id="Email" className="pointer__color"></div> :
-                                           <div id="Email" className="pointer"></div>}
-                                       <input
-                                           className="input__block-authorization"
-                                           onChange={e => setEmail(e.target.value)}
-                                           value={email}
-                                           type="text"
-                                           placeholder='Email'
-                                       />
-                                   </div>
-                                   <div className="block__border block__flex">
-                                       {password ? <div id="Password" className="pointer__color"></div> :
-                                           <div id="Password" className="pointer"></div>}
-                                       <input
-                                           className="input__block-authorization"
-                                           onChange={e => setPassword(e.target.value)}
-                                           value={password}
-                                           type="password"
-                                           placeholder='Пароль'
-                                       />
-                                   </div>
-                                   <div className="block__border block__flex">
-                                       <div id="Email" className="pointer"></div>
-                                       <input
-                                           className="input__block-authorization"
-                                           // onChange={e => setPassword(e.target.value)}
-                                           // value={password}
-                                           type="surname"
-                                           placeholder='Фамилия'
-                                       />
-                                   </div>
-                                   <div className="block__border block__flex">
-                                       <div id="Email" className="pointer"></div>
-                                       <input
-                                           className="input__block-authorization"
-                                           // onChange={e => setPassword(e.target.value)}
-                                           // value={middlename}
-                                           type="name"
-                                           placeholder='Имя'
-                                       />
-                                   </div>
-                                   <div className="block__border block__flex">
-                                       <div id="Email" className="pointer"></div>
-                                       <input
-                                           className="input__block-authorization"
-                                           // onChange={e => setPassword(e.target.value)}
-                                           // value={password}
-                                           type="middlename"
-                                           placeholder='Отчество'
-                                       />
-                                   </div>
-                               </div>
+                            <div className="form__margin-top form__flex-justify form__width">
+                                <div>
+                                    <div className="block__flex form__justify">
+                                        <h2 className="h2_20 text__block-authorization-size__h2">Регистрация</h2>
+                                    </div>
+                                    <div className="block__border block__flex">
+                                        {email ? <div id="Email" className="pointer__color"></div> :
+                                            <div id="Email" className="pointer"></div>}
+                                        <input
+                                            className="input__block-authorization"
+                                            onChange={e => setEmail(e.target.value)}
+                                            value={email}
+                                            type="text"
+                                            placeholder='Email'
+                                        />
+                                    </div>
+                                    <div className="block__border block__flex">
+                                        {password ? <div id="Password" className="pointer__color"></div> :
+                                            <div id="Password" className="pointer"></div>}
+                                        <input
+                                            className="input__block-authorization"
+                                            onChange={e => setPassword(e.target.value)}
+                                            value={password}
+                                            type="password"
+                                            placeholder='Пароль'
+                                        />
+                                    </div>
+                                    <div className="block__border block__flex">
+                                        <div id="Email" className="pointer"></div>
+                                        <input
+                                            className="input__block-authorization"
+                                            // onChange={e => setPassword(e.target.value)}
+                                            // value={password}
+                                            type="surname"
+                                            placeholder='Фамилия'
+                                        />
+                                    </div>
+                                    <div className="block__border block__flex">
+                                        <div id="Email" className="pointer"></div>
+                                        <input
+                                            className="input__block-authorization"
+                                            // onChange={e => setPassword(e.target.value)}
+                                            // value={middlename}
+                                            type="name"
+                                            placeholder='Имя'
+                                        />
+                                    </div>
+                                    <div className="block__border block__flex">
+                                        <div id="Email" className="pointer"></div>
+                                        <input
+                                            className="input__block-authorization"
+                                            // onChange={e => setPassword(e.target.value)}
+                                            // value={password}
+                                            type="middlename"
+                                            placeholder='Отчество'
+                                        />
+                                    </div>
+                                </div>
                             </div>
                             <div className="form__flex-justify form__width">
-                                <button
+                            <button
                                     className="button__block-authorization"
                                     onClick={() => store.registration(email ? email : "", password ? password : "")}>
                                     Зарегистрироваться
