@@ -1,10 +1,13 @@
+import { PrismaClient } from '@prisma/client'
+const prisma = new PrismaClient()
+
 const db = require('../models/db');
 const  userService = require('../service/user.service');
 const {validationResult} = require('express-validator');
 const ApiError = require('../exceptions/api.error');
 
 class UserController {
-    async registration (req, res, next) {
+    async registration (req: any, res: any, next: any): Promise<any> {
         try {
             const errors = validationResult(req);
 
@@ -12,8 +15,8 @@ class UserController {
                 return next(ApiError.BadRequest('Validation error!', errors.array()));
             }
 
-            const {email, password} = req.body;
-            const userData = await userService.registration(email, password);
+            const {email, password, name, surname, middlename} = req.body;
+            const userData = await userService.registration(email, password, name, surname, middlename);
 
             res.cookie('refreshToken', userData.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true});
 
@@ -23,7 +26,7 @@ class UserController {
         }
     }
 
-    async login (req, res, next) {
+    async login (req: any, res: any, next: any): Promise<any> {
         try {
             const {email, password} = req.body;
             const userData = await userService.login(email, password);
@@ -36,7 +39,7 @@ class UserController {
         }
     }
 
-    async logout (req, res, next) {
+    async logout (req: any, res: any, next: any): Promise<any> {
         try {
             const {refreshToken} = req.cookies;
             const token = await userService.logout(refreshToken);
@@ -48,7 +51,7 @@ class UserController {
         }
     }
 
-    async activate (req, res, next) {
+    async activate (req: any, res: any, next: any): Promise<any> {
         try {
             const activationLink = req.params.link;
             await  userService.activate(activationLink);
@@ -58,7 +61,7 @@ class UserController {
         }
     }
 
-    async refresh (req, res, next) {
+    async refresh (req: any, res: any, next: any): Promise<any> {
         try {
             const {refreshToken} = req.cookies;
             const userData = await userService.refresh(refreshToken);
@@ -70,7 +73,7 @@ class UserController {
         }
     }
 
-    async findUser(req, res, next) {
+    async findUser(req: any, res: any, next: any): Promise<any> {
         try {
             const email = req.params.email;
             const user = await db.query(`SELECT * FROM person WHERE email = $1`, [email]);
@@ -80,7 +83,7 @@ class UserController {
         }
     }
 
-    async createUser(req, res, next) {
+    async createUser(req: any, res: any, next: any): Promise<any> {
         try {
             const {name, surname, middleName, password, email, phone, isActivated, activationLink} = req.body;
             const newPerson = await db.query('INSERT INTO person (name, surname, middleName, password, email, phone, isActivated, activationLink)' +
@@ -91,7 +94,7 @@ class UserController {
         }
     }
 
-    async getUser(req, res, next) {
+    async getUser(req: any, res: any, next: any): Promise<any> {
         try {
             const users = await userService.getAllUsers();
             res.json(users);
@@ -100,7 +103,7 @@ class UserController {
         }
     }
 
-    async getOneUser(req, res, next) {
+    async getOneUser(req: any, res: any, next: any): Promise<any> {
         try {
             const id = req.params.id;
             const user = await db.query('SELECT * FROM person where id = $1', [id]);
@@ -110,7 +113,7 @@ class UserController {
         }
     }
 
-    async updateUser(req, res, next) {
+    async updateUser(req: any, res: any, next: any): Promise<any> {
         try {
             const {id, name, surname, middleName, password, email, phone, isActivated, activationLink} = req.body;
             const user = await db.query("UPDATE person set name = $2, surname = $3, middleName = $4, password = $5, email = $6, phone = $7, isActivated = $8, activationLink = $9" +
@@ -121,7 +124,7 @@ class UserController {
         }
     }
 
-    async deleteUser(req, res, next) {
+    async deleteUser(req: any, res: any, next: any): Promise<any> {
         try {
             const id = req.params.id;
             const user = await db.query('DELETE FROM person where id = $1', [id]);

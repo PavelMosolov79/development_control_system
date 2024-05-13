@@ -1,3 +1,6 @@
+import { PrismaClient } from '@prisma/client'
+const prisma = new PrismaClient()
+
 const bcrypt = require('bcrypt');
 const uuid = require('uuid');
 const mailService = require('./mail.service');
@@ -7,21 +10,38 @@ const db = require("../models/db");
 const ApiError = require('../exceptions/api.error')
 
 class UserService {
-    async registration(email, password) {
+    async registration(email: string, password: string, name: string, surname: string, middlename: string): Promise<any> {
         try {
-            const user = await db.query(`SELECT * FROM person WHERE email = $1`, [email]);
+            const user = await prisma.person.findFirst({
+                where: { email }
+            });
+            // await db.query(`SELECT * FROM person WHERE email = $1`, [email]);
 
-            if (user.rows.length > 0) {
+            if (user) {
                 throw ApiError.BadRequest(`The user with the mail ${email} already exists!`);
             }
 
-            const hashPassword = await  bcrypt.hash(password, 3);
+            const hashPassword = await bcrypt.hash(password, 3);
             const activationLink = uuid.v4();
-            const newPerson = await db.query('INSERT INTO person (password, email, isActivated, activationLink) values ($1, $2, $3, $4) RETURNING *', [hashPassword, email, false, activationLink])
+            const newPerson = await prisma.person.create({
+                data: {
+                    name: name,
+                    surname: surname,
+                    middlename: middlename,
+                    password: hashPassword,
+                    email: email,
+                    phone: "",
+                    isactivated: false,
+                    activationlink: activationLink
+                }
+            })
+                // await db.query('INSERT INTO person (password, email, isActivated, activationLink) values ($1, $2, $3, $4) RETURNING *',
+                // [hashPassword, email, false, activationLink])
 
             await mailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`);
 
-            const userDto = new UserDto(newPerson.rows[0]);
+            const userDto = new UserDto(newPerson); //
+            console.log(userDto)
             const tokens = tokenService.generateTokens({...userDto});
 
             await tokenService.saveToken(userDto.id, tokens.refreshToken);
@@ -33,7 +53,7 @@ class UserService {
         }
     }
 
-    async activate(activationLink) {
+    async activate(activationLink: string):Promise<any> {
         const user = await db.query(`SELECT * FROM person WHERE activationlink = $1`, [activationLink]);
         if (user.rows.length <= 0) {
             throw ApiError.BadRequest('Incorrect link activation!')
@@ -41,7 +61,7 @@ class UserService {
         const updateUser = await db.query(`UPDATE person SET isactivated = $1 WHERE id = $2 RETURNING *`, [true, user.rows[0].id]);
     }
 
-    async login(email, password) {
+    async login(email: string, password: string):Promise<any> {
         try {
             const user = await db.query(`SELECT * FROM person WHERE email = $1`, [email]);
 
@@ -66,13 +86,13 @@ class UserService {
         }
     }
 
-    async logout(refreshToken) {
+    async logout(refreshToken: string): Promise<any> {
         const token = await tokenService.removeToken(refreshToken);
 
         return token;
     }
 
-    async refresh(refreshToken) {
+    async refresh(refreshToken: string): Promise<any> {
         if (!refreshToken) {
             throw ApiError.UnauthorizedError();
         }
