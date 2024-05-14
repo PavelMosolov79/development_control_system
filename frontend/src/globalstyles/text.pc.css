@@ -14,6 +14,12 @@
     color: var(--text-color-form-white);
 }
 
+.p_18_error {
+    font-size: 14px;
+    color: var(--text-color-form-error-red);
+}
+
+
 .a_18 {
     outline: none;
     text-decoration: none;

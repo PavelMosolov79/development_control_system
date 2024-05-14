@@ -10,7 +10,7 @@ class TokenService {
         return {accessToken, refreshToken}
     }
 
-    validateAccessToken(token: any) {
+    validateAccessToken(token: string) {
         try {
             const userData = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
             return userData;
@@ -19,7 +19,7 @@ class TokenService {
         }
     }
 
-    validateRefreshToken(token: any) {
+    validateRefreshToken(token: string) {
         try {
             const userData = jwt.verify(token, process.env.JWT_REFRESH_SECRET);
             return userData;
@@ -28,51 +28,59 @@ class TokenService {
         }
     }
 
-    async saveToken(userId: number, refreshToken: any): Promise<any> {
-        const tokenData = prisma.token.findFirst({
+    async saveToken(userId: number, refreshToken: string): Promise<any> {
+        const tokenData = await prisma.token.findFirst({
             where: { personId: userId }
         })
-            // await db.query('SELECT * FROM token WHERE userId = $1', [userId]);
+
         if (tokenData) {
-            // const user = prisma.person.findUnique({
-            //     where: { id: userId },
-            //     select: {
-            //
-            //     }
-            // })
-            const token = prisma.token.update({
-                // where: {
-                //     personId: userId
-                // }
+            const token = await prisma.token.update({
+                where: {
+                    id: tokenData.id
+                },
+                data: {
+                    refreshToken: refreshToken
+                }
             })
-                // await db.query('UPDATE token set refreshToken = $2 where userid = $1  RETURNING *', [userId, refreshToken]);
             return token;
         }
 
-        const token = await db.query('INSERT INTO token (userId, refreshToken) values ($1, $2) RETURNING *', [userId, refreshToken]);
+        const token = await prisma.token.create({
+            data: {
+                personId: userId,
+                refreshToken: refreshToken
+            }
+        })
+
         return token;
     }
 
     async removeToken(refreshToken: string): Promise<any> {
-        function cheToken(token: any) {
-            return token.refreshtoken! === refreshToken;
-        }
+        const tokenId = await prisma.token.findFirst({
+            where: { refreshToken: refreshToken }
+        })
 
-        const tokenData = await db.query('SELECT * FROM token');
-        let tokenId = await tokenData.rows.find(cheToken);
-        let tokenDelete = await db.query('DELETE FROM token WHERE id = $1 RETURNING *', [tokenId.id]);
-        return tokenDelete;
+        if (tokenId) {
+            let tokenDelete = await prisma.token.delete({
+                where: { id: tokenId.id  }
+            })
+
+            return tokenDelete;
+        } else {
+            return null;
+        }
     }
 
-    async findToken(refreshToken: any): Promise<any> {
-        function cheToken(token: any) {
-            return token.refreshtoken! === refreshToken;
+    async findToken(refreshToken: string): Promise<any> {
+        let tokenId = await prisma.token.findFirst({
+            where: { refreshToken: refreshToken }
+        })
+
+        if (tokenId) {
+            return tokenId;
+        } else {
+            return null;
         }
-
-        const tokenData = await db.query('SELECT * FROM token');
-
-        let tokenId = await tokenData.rows.find(cheToken);//xx => xx.refreshtoken === refreshToken);
-        return tokenId;
     }
 }
 

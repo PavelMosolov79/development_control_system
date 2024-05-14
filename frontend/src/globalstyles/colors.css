@@ -8,10 +8,12 @@
     --text-color-form-black: rgba(0, 0, 0, 1);
     --text-color-form-white: rgba(255, 255, 255, 1);
     --text-color-form-visited-pink: #CB50DE;
+    --text-color-form-error-red: #ff0000;
 
     --placeholder-color-form-grey: #ffffff;
 
     --border-color-bottom: #6041A6;
+    --border-color-error: #a80000;
 
     --global-white-full: #ffffff;
 }

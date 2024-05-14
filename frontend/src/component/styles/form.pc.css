@@ -20,7 +20,7 @@
 
 .form__size {
     width: calc(var(--index) * 15);
-    height: calc(var(--index) * 18);
+    height: calc(var(--index) * 20);
 }
 
 .form__flex {
@@ -82,6 +82,17 @@ text__block-authorization-size__h2 {
 
 .form__margin-top {
     margin-top: 25px;
+}
+
+.text__block-error {
+    border-radius: 25px;
+    text-align: center;
+    border: 2px solid var(--border-color-error);
+}
+
+.block__none-margin-padding {
+    margin: 0px;
+    padding: 0px;
 }
 
 

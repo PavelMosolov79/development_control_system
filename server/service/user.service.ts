@@ -15,10 +15,9 @@ class UserService {
             const user = await prisma.person.findFirst({
                 where: { email }
             });
-            // await db.query(`SELECT * FROM person WHERE email = $1`, [email]);
 
             if (user) {
-                throw ApiError.BadRequest(`The user with the mail ${email} already exists!`);
+                throw ApiError.Conflict(`The user with the mail ${email} already exists!`);
             }
 
             const hashPassword = await bcrypt.hash(password, 3);
@@ -35,13 +34,10 @@ class UserService {
                     activationlink: activationLink
                 }
             })
-                // await db.query('INSERT INTO person (password, email, isActivated, activationLink) values ($1, $2, $3, $4) RETURNING *',
-                // [hashPassword, email, false, activationLink])
 
             await mailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`);
 
-            const userDto = new UserDto(newPerson); //
-            console.log(userDto)
+            const userDto = new UserDto(newPerson);
             const tokens = tokenService.generateTokens({...userDto});
 
             await tokenService.saveToken(userDto.id, tokens.refreshToken);
@@ -54,28 +50,41 @@ class UserService {
     }
 
     async activate(activationLink: string):Promise<any> {
-        const user = await db.query(`SELECT * FROM person WHERE activationlink = $1`, [activationLink]);
-        if (user.rows.length <= 0) {
+        const user = await prisma.person.findFirst({
+            where: { activationlink: activationLink }
+        });
+
+        if (!user) {
             throw ApiError.BadRequest('Incorrect link activation!')
         }
-        const updateUser = await db.query(`UPDATE person SET isactivated = $1 WHERE id = $2 RETURNING *`, [true, user.rows[0].id]);
+
+        const updateUser = await prisma.person.update({
+            where: {
+                id: user.id
+            },
+            data: {
+                isactivated: true
+            }
+        });
     }
 
     async login(email: string, password: string):Promise<any> {
         try {
-            const user = await db.query(`SELECT * FROM person WHERE email = $1`, [email]);
+            const user = await prisma.person.findFirst({
+                where: { email }
+            });
 
-            if (user.rows.length <= 0) {
+            if (!user) {
                 throw ApiError.BadRequest(`The user with the mail ${email} does not exist!`, []);
             }
 
-            const isPassEquals = await bcrypt.compare(password, user.rows[0].password);
+            const isPassEquals = await bcrypt.compare(password, user.password);
 
             if (!isPassEquals) {
                 throw ApiError.BadRequest('Invalid password!');
             }
 
-            const userDto = new UserDto(user.rows[0]);
+            const userDto = new UserDto(user);
             const tokens = tokenService.generateTokens({...userDto});
 
             await tokenService.saveToken(userDto.id, tokens.refreshToken);
@@ -104,8 +113,12 @@ class UserService {
             throw ApiError.UnauthorizedError();
         }
 
-        const user = await db.query(`SELECT * FROM person WHERE id = $1`, [userData.id]);
-        const userDto = new UserDto(user.rows[0]);
+        const user = await prisma.person.findFirst({
+            where: { id: userData.id }
+        });
+
+
+        const userDto = new UserDto(user);
         const tokens = tokenService.generateTokens({...userDto});
 
         await tokenService.saveToken(userDto.id, tokens.refreshToken);
@@ -113,10 +126,10 @@ class UserService {
         return {...tokens, userDto}
     }
 
-    async getAllUsers() {
-        const users = await db.query('SELECT * FROM person');
-        return users;
-    }
+    // async getAllUsers() {
+    //     const users = await db.query('SELECT * FROM person');
+    //     return users;
+    // }
 }
 
 module.exports = new UserService();

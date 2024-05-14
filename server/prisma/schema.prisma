@@ -22,7 +22,7 @@ model Person {
   email          String  @unique
   phone          String?
   isactivated    Boolean
-  activationlink String
+  activationlink String  @unique
   token          Token?
 }
 
